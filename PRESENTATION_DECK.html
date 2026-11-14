@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOL-7 — Project Presentation Deck (12 Slides)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #020617;
+      --card: #0f172a;
+      --border: #22d3ee;
+      --amber: #fbbf24;
+      --emerald: #34d399;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+    }
+    .deck-container {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(34, 211, 238, 0.12), transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(251, 191, 36, 0.1), transparent 40%),
+        #020617;
+    }
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 1200px;
+      height: 100%;
+      max-height: 675px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 2px solid rgba(34, 211, 238, 0.45);
+      border-radius: 24px;
+      padding: 42px 52px;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75);
+      position: relative;
+      overflow: hidden;
+    }
+    .slide.active {
+      display: flex;
+    }
+    .slide-header {
+      border-bottom: 1px solid rgba(34, 211, 238, 0.25);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      color: var(--amber);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 38px;
+      line-height: 1.15;
+      color: #ffffff;
+    }
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 28px;
+      color: #22d3ee;
+    }
+    .presenter-badge {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      background: rgba(34, 211, 238, 0.12);
+      border: 1px solid rgba(34, 211, 238, 0.45);
+      color: #67e8f9;
+      padding: 6px 12px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      flex: 1;
+      align-items: stretch;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      flex: 1;
+      align-items: stretch;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      flex: 1;
+      align-items: stretch;
+    }
+    .box {
+      background: rgba(2, 6, 23, 0.72);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .box h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 17px;
+      color: var(--amber);
+    }
+    .box p, .box li {
+      font-size: 18px;
+      line-height: 1.42;
+      color: #e2e8f0;
+    }
+    ul {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .speaker-note {
+      margin-top: 16px;
+      background: rgba(251, 191, 36, 0.08);
+      border-left: 4px solid var(--amber);
+      padding: 12px 16px;
+      border-radius: 0 12px 12px 0;
+      font-size: 15px;
+      color: #fde68a;
+    }
+    .speaker-note strong {
+      font-family: 'Share Tech Mono', monospace;
+      text-transform: uppercase;
+      margin-right: 6px;
+    }
+    .controls-bar {
+      height: 56px;
+      background: #090d16;
+      border-top: 1px solid rgba(34, 211, 238, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 14px;
+    }
+    .btn {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid #22d3ee;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .btn:hover {
+      background: #22d3ee;
+      color: #020617;
+    }
+    @media print {
+      body {
+        overflow: visible;
+        height: auto;
+      }
+      .controls-bar {
+        display: none;
+      }
+      .deck-container {
+        display: block;
+        padding: 0;
+      }
+      .slide {
+        display: flex !important;
+        page-break-after: always;
+        max-width: 100%;
+        height: 96vh;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck-container">
+    <!-- SLIDE 1 -->
+    <section class="slide active">
+      <div class="slide-header">
+        <div>
+          <div class="tag">PROTOTYPE PITCH DECK • SLIDE 01 / 12</div>
+          <h1>🚀 SOL-7: INTERPLANETARY MISSION SIMULATOR</h1>
+        </div>
+        <span class="presenter-badge">PRESENTER 1 • INTRO</span>
+      </div>
+      <div class="grid-2">
+        <div class="box">
+          <h3>🌌 What is SOL-7?</h3>
+          <p>A browser-native <strong>3D Space Exploration & Decision-Driven NASA Story Game</strong> built with React 19, Three.js (React Three Fiber), and Web Audio synthesis.</p>
+          <ul>
+            <li>Pre-flight Astronaut Registration & Live Dossier</li>
+            <li>Earth Launchpad Walk, Elevator & Rocket Ascent to 100 km</li>
+            <li>Interactive 8-Planet + Moon 3D Solar System Map</li>
+            <li>4-Astronaut Crew & <em>Detroit: Become Human</em>-style Story Engine</li>
+            <li>In-Game EVA Camera, Photo Gallery & Final Progress Certificate</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>🎯 Core Mission Objective</h3>
+          <p>Transform passive space textbooks into an interactive leadership experience where students command a crew on the <strong>Moon (Artemis Base Alpha)</strong> or <strong>Mars (Olympus Station)</strong> using real NASA science.</p>
+          <p style="margin-top: 12px; color: #34d399; font-family: 'Share Tech Mono', monospace;">
+            ✓ 100% Procedural 3D & Audio • Zero External Asset Downloads
+          </p>
+        </div>
+      </div>
+      <div class="speaker-note">
+        <strong>🎙️ Speaker Note:</strong> "Hello everyone! Today we present SOL-7, an interactive 3D space mission simulator and NASA story engine that lets anyone launch from Earth, navigate the 8-planet Solar System, land on the Moon or Mars, and lead a 4-astronaut crew through real NASA survival crises."
+      </div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <div class="tag">PROBLEM STATEMENT • SLIDE 02 / 12</div>
+          <h2>⚠️ The 3 Core Problems We Solve</h2>
+        </div>
+        <span class="presenter-badge">PRESENTER 1 • PROBLEM</span>
+      </div>
+      <div class="grid-3">
+        <div class="box">
+          <h3>1. Passive STEM Learning</h3>
+          <p>Space science is often taught through static diagrams and raw telemetry tables. Students rarely experience cause-and-effect decision-making during a solar storm or life-support emergency.</p>
+        </div>
+        <div class="box">
+          <h3>2. Hardware & Size Barriers</h3>
+          <p>Traditional 3D space simulators require expensive gaming PCs and multi-gigabyte downloads, locking out school laptops and web-first classrooms.</p>
+        </div>
+        <div class="box">
+          <h3>3. Missing Human Teamwork</h3>
+          <p>Most space games focus only on piloting mechanics rather than the human, biological, and psychological trade-offs of keeping a 4-person crew alive and united.</p>
+        </div>
+      </div>
+      <div class="speaker-note">
+        <strong>🎙️ Speaker Note:</strong> "We tackled three major gaps: passive textbook learning, heavy hardware barriers in traditional 3D simulators, and the lack of human teamwork and resource decision-making in space games."
+      </div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <div class="tag">PROPOSED SOLUTION • SLIDE 03 / 12</div>
+          <h2>💡 The SOL-7 End-to-End Mission Loop</h2>
+        </div>
+        <span class="presenter-badge">PRESENTER 1 • SOLUTION</span>
+      </div>
+      <div class="grid-3">
+        <div class="box">
+          <h3>Phase 1: Registration & Launch</h3>
+          <ul>
+            <li>NASA Terminal Dossier (Callsign, Age Rank, Difficulty, Suit Avatar, Patch).</li>
+            <li>Walk to the gantry elevator, board SOL-7, and launch to the 100 km Kármán Line.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Phase 2: Orbit & Landing</h3>
+          <ul>
+            <li>Inspect all <strong>8 Planets + Moon + Sun + Asteroid Belt</strong> in 3D orbit.</li>
+            <li>Lock trajectory to Moon or Mars and experience animated retro-propulsive touchdown.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Phase 3: Outpost Story & Photo Log</h3>
+          <ul>
+            <li>Lead a 4-astronaut crew through 4 branching NASA crises.</li>
+            <li>Snap EVA photos (`P`) that appear alongside your final Decision Flowchart Certificate.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="speaker-note">
+        <strong>🎙️ Speaker Note:</strong> "Our solution is a seamless 5-part loop in the browser: register your astronaut profile, launch from Earth, navigate the 3D Solar System, land on the Moon or Mars to solve 4 crew crises, and review your mission photos and decision flowchart."
+      </div>
+    </section>
+
+    <!-- SLIDE 4 -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <div class="tag">KEY INNOVATIONS • SLIDE 04 / 12</div>
+          <h2>✨ What Makes SOL-7 Innovative?</h2>
+        </div>
+        <span class="presenter-badge">PRESENTER 2 • INNOVATION</span>
+      </div>
+      <div class="grid-3">
+        <div class="box">
+          <h3>🎨 100% Procedural Assets</h3>
+          <p>All 8 planets, clouds, rings, craters, Mars rust terrain, and rocket plumes are generated in code via HTML5 <code>CanvasTexture</code>—<strong>0 MB of external image or audio files</strong>.</p>
+        </div>
+        <div class="box">
+          <h3>🛰️ Grounded in 4 NASA Systems</h3>
+          <ul>
+            <li><strong>DONKI</strong>: Solar flare & CME shielding</li>
+            <li><strong>ECLSS</strong>: Closed-loop water & O₂ recovery</li>
+            <li><strong>OSDR</strong>: Crew radiation dosimetry</li>
+            <li><strong>DSN</strong>: 14-min Mars signal latency</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>📸 Telemetry-Stamped EVA Camera</h3>
+          <p>Captures live WebGL frames, automatically stamps Commander callsign, mission phase, location, and progress %, and builds a downloadable photo portfolio.</p>
+        </div>
+      </div>
+      <div class="speaker-note">
+        <strong>🎙️ Speaker Note:</strong> "Three innovations set SOL-7 apart: 100% procedural graphics and Web Audio synthesis with zero asset downloads, authentic integration of four NASA science domains, and a live WebGL camera that stamps mission progress metadata onto every photo."
+      </div>
+    </section>
+
+    <!-- SLIDE 5 -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <div class="tag">SYSTEM ARCHITECTURE • SLIDE 05 / 12</div>
+          <h2>🏗️ Dual-Layer Architecture & 10-Mode State Machine</h2>
+        </div>
+        <span class="presenter-badge">PRESENTER 2 • ARCHITECTURE</span>
+      </div>
+      <div class="grid-2">
+        <div class="box">
+          <h3>Master State Controller (<code>App.tsx</code>)</h3>
+          <ul>
+            <li>Manages 10 seamless <code>ViewMode</code> transitions: <code>WALK</code> → <code>ELEVATOR_RIDE</code> → <code>COCKPIT</code> → <code>COUNTDOWN</code> → <code>IN_FLIGHT</code> → <code>SPACE_ORBIT</code> → <code>WARP_DRIVE</code> → <code>PLANET_DESCENT</code> → <code>PLANET_SURFACE</code> → <code>CONVERSATION</code>.</li>
+            <li>Tracks real-time Outpost Survival Stats: <strong>Power, Oxygen, Water, Morale</strong>.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>3D Viewport + 2D Cybernetic HUD</h3>
+          <ul>
+            <li><strong><code>Scene.tsx</code></strong>: 60 FPS React Three Fiber canvas with <code>preserveDrawingBuffer: true</code> for instant photo capture.</li>
+            <li><strong><code>Overlay.tsx</code></strong>: Responsive HUD, Kid-Friendly Science Glossary (<code>G</code>), 4-Way Dialogue Wheel, and Photo Gallery Modal.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="speaker-note">
+        <strong>🎙️ Speaker Note:</strong> "Our architecture separates the 60 FPS 3D WebGL scene from the reactive 2D Cybernetic HUD, coordinated by a central 10-state machine in App.tsx."
+      </div>
+    </section>
+
+    <!-- SLIDE 6 -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <div class="tag">TECHNOLOGY STACK • SLIDE 06 / 12</div>
+          <h2>🛠️ Technologies Used</h2>
+        </div>
+        <span class="presenter-badge">PRESENTER 2 • TECH STACK</span>
+      </div>
+      <div class="grid-4">
+        <div class="box">
+          <h3>React 19 + TS</h3>
+          <p>Modular functional components and strict TypeScript interfaces for story chapters, telemetry, and astronaut profiles.</p>
+        </div>
+        <div class="box">
+          <h3>Three.js & R3F</h3>
+          <p><code>@react-three/fiber</code> & <code>@react-three/drei</code> for 3D orbital mechanics, PBR suits, and low-g surface physics.</p>
+        </div>
+        <div class="box">
+          <h3>Tailwind CSS v4</h3>
+          <p>High-contrast NASA sci-fi UI with Orbitron/Rajdhani typography, HUD reticles, and responsive modals.</p>
+        </div>
+        <div class="box">
+          <h3>Web Audio API</h3>
+          <p>Custom real-time sound synthesizer for rocket thrusters, countdown tones, airlocks, and camera shutters.</p>
+        </div>
+      </div>
+      <div class="speaker-note">
+        <strong>🎙️ Speaker Note:</strong> "We built the prototype using React 19, TypeScript, Three.js with React Three Fiber, Tailwind CSS v4, and the native Web Audio API."
+      </div>
+    </section>
+
+    <!-- SLIDE 7 -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <div class="tag">IMPLEMENTATION PART 1 • SLIDE 07 / 12</div>
+          <h2>🪐 8-Planet Solar System & Planetary Descent</h2>
+        </div>
+        <span class="presenter-badge">PRESENTER 3 • 3D WORLD</span>
+      </div>
+      <div class="grid-2">
+        <div class="box">
+          <h3>Interactive Solar System (<code>SpaceOrbitNav.tsx</code>)</h3>
+          <ul>
+            <li>Renders the Sun, <strong>Mercury, Venus, Earth (+ orbiting Moon), Mars, Asteroid Belt (120 instanced rocks), Jupiter, Saturn (with rings), Uranus, and Neptune</strong>.</li>
+            <li>Clicking any planet smoothly lerps the camera and displays NASA telemetry (diameter, moons, temperature, fun fact).</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Touchdown & Sunrise Lighting (<code>PlanetarySurface.tsx</code>)</h3>
+          <ul>
+            <li><strong>HemisphereLight Bounce</strong> eliminates pitch-black shadows at low sun angles.</li>
+            <li><strong>Moon Descent</strong>: Blue-white vacuum retro-plumes & grey crater dust spray.</li>
+            <li><strong>Mars Descent</strong>: Orange plasma entry glow, swirling red dust storm & shockwave ring.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="speaker-note">
+        <strong>🎙️ Speaker Note:</strong> "In our 3D world implementation, players can inspect all 8 planets plus the Moon in orbit, then watch a custom descent animation tailored to either the Moon's vacuum or Mars's dusty atmosphere."
+      </div>
+    </section>
+
+    <!-- SLIDE 8 -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <div class="tag">IMPLEMENTATION PART 2 • SLIDE 08 / 12</div>
+          <h2>👩‍🚀 4-Astronaut Crew & Branching Story Engine</h2>
+        </div>
+        <span class="presenter-badge">PRESENTER 3 • CREW & STORY</span>
+      </div>
+      <div class="grid-2">
+        <div class="box">
+          <h3>4 Distinct PBR Spacesuits</h3>
+          <ul>
+            <li>🔵 <strong>Commander (Player)</strong>: Deep Navy & White armor, Mirrored Gold visor.</li>
+            <li>🔴 <strong>Raj (Command Hub)</strong>: Crimson Red suit — NASA DONKI Space Weather.</li>
+            <li>🟠 <strong>Leo (Solar Array)</strong>: Hazard Orange suit — Power & Rover Mechanics.</li>
+            <li>🟢 <strong>Dr. Sarah (Bio-Dome)</strong>: Medical Teal suit — ECLSS Water & OSDR Radiation.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Detroit-Style 4-Way Dialogue Wheel</h3>
+          <ul>
+            <li><strong>▲ SCIENTIFIC</strong> | <strong>◄ CAUTIOUS</strong> | <strong>► EMPATHETIC</strong> | <strong>▼ BOLD / ACTION</strong></li>
+            <li>Every decision shifts <strong>Power, Oxygen, Water, and Morale</strong> and logs into the final mission flowchart.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="speaker-note">
+        <strong>🎙️ Speaker Note:</strong> "Our four astronauts wear distinct PBR spacesuits with reflective visors and Indian flag patches. Talking to each specialist opens a 4-way dialogue wheel where every choice affects habitat survival stats."
+      </div>
+    </section>
+
+    <!-- SLIDE 9 -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <div class="tag">IMPLEMENTATION PART 3 • SLIDE 09 / 12</div>
+          <h2>📸 EVA Camera, Gallery & Progress Certificate</h2>
+        </div>
+        <span class="presenter-badge">PRESENTER 3 • CAMERA & DEBRIEF</span>
+      </div>
+      <div class="grid-2">
+        <div class="box">
+          <h3>In-Game Camera (<code>SNAP PHOTO [P]</code>)</h3>
+          <ul>
+            <li>Works in every phase: Launchpad, Ascent, Solar System Orbit, Descent, and Surface EVA.</li>
+            <li>Triggers a camera shutter sound + flash and stamps a NASA telemetry bar with <strong>Mission Progress %</strong> onto the image.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Mission Complete Debriefing</h3>
+          <ul>
+            <li>Displays the <strong>Junior Mission Commander Certificate</strong> with Commander callsign & badge.</li>
+            <li>Showcases all captured photos alongside their <strong>Progress Step</strong> and the <strong>4-Chapter Decision Flowchart</strong>.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="speaker-note">
+        <strong>🎙️ Speaker Note:</strong> "Players can press P or click Snap Photo at any time to capture their mission. When the mission ends, all photos are displayed alongside the mission progress log and 4-chapter decision flowchart."
+      </div>
+    </section>
+
+    <!-- SLIDE 10 -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <div class="tag">LIVE DEMONSTRATION • SLIDE 10 / 12</div>
+          <h2>🎮 3-Minute Live Demo Walkthrough</h2>
+        </div>
+        <span class="presenter-badge">PRESENTER 4 • LIVE DEMO</span>
+      </div>
+      <div class="grid-4">
+        <div class="box">
+          <h3>Step 1 (0:00)</h3>
+          <p><strong>Briefing Terminal</strong>: Enter Commander Name, select Avatar & Difficulty, pick <strong>MARS</strong>, and launch countdown.</p>
+        </div>
+        <div class="box">
+          <h3>Step 2 (0:45)</h3>
+          <p><strong>Launch & Orbit</strong>: Ride elevator (`E`), launch to 100 km, inspect planets in 3D Solar System, snap a photo (`P`).</p>
+        </div>
+        <div class="box">
+          <h3>Step 3 (1:30)</h3>
+          <p><strong>Outpost Crises</strong>: Land on Mars, talk to <strong>Raj, Leo, and Sarah</strong> (`E`), and resolve all 4 NASA chapters.</p>
+        </div>
+        <div class="box">
+          <h3>Step 4 (2:30)</h3>
+          <p><strong>Earth Return</strong>: Board return rocket, complete mission, and showcase the <strong>Photo Gallery + Flowchart Certificate</strong>.</p>
+        </div>
+      </div>
+      <div class="speaker-note">
+        <strong>🎙️ Speaker Note:</strong> "Here is our 4-step live demonstration flow: Registration, Orbital Navigation, Surface Story Decisions with Raj, Leo, and Sarah, and finally the Earth Return Certificate with our captured photos."
+      </div>
+    </section>
+
+    <!-- SLIDE 11 -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <div class="tag">EXPECTED IMPACT • SLIDE 11 / 12</div>
+          <h2>🌍 Expected Educational & Social Impact</h2>
+        </div>
+        <span class="presenter-badge">PRESENTER 4 • IMPACT</span>
+      </div>
+      <div class="grid-3">
+        <div class="box">
+          <h3>🏫 Classroom Ready Anywhere</h3>
+          <p>Zero installation and zero external asset downloads mean any school computer with a web browser can run a 60 FPS 3D space lab.</p>
+        </div>
+        <div class="box">
+          <h3>🧠 Active Systems Thinking</h3>
+          <p>Students learn real NASA science (CMEs, hydroponics, signal delay) by balancing habitat Power, Oxygen, Water, and Crew Morale.</p>
+        </div>
+        <div class="box">
+          <h3>🚀 Scalable Future Roadmap</h3>
+          <p>Ready for live NASA DONKI API webhooks, VR WebXR headset mode, and 4-player classroom co-op across the 4 crew roles.</p>
+        </div>
+      </div>
+      <div class="speaker-note">
+        <strong>🎙️ Speaker Note:</strong> "SOL-7 makes experiential space STEM accessible in any classroom without expensive hardware, teaching systems thinking and leadership while remaining extensible for live NASA APIs."
+      </div>
+    </section>
+
+    <!-- SLIDE 12 -->
+    <section class="slide">
+      <div class="slide-header">
+        <div>
+          <div class="tag">CONCLUSION • SLIDE 12 / 12</div>
+          <h2>🏆 Mission Accomplished — Thank You!</h2>
+        </div>
+        <span class="presenter-badge">ALL TEAM • Q&A</span>
+      </div>
+      <div class="grid-2">
+        <div class="box">
+          <h3>SOL-7 Prototype Summary</h3>
+          <ul>
+            <li>✅ Pre-Game Astronaut Registration & Live Dossier</li>
+            <li>✅ Full 8-Planet + Moon 3D Solar System Navigation</li>
+            <li>✅ 4-Astronaut Crew & 4 Branching NASA Story Chapters</li>
+            <li>✅ In-Game EVA Camera, Gallery & Final Progress Certificate</li>
+          </ul>
+        </div>
+        <div class="box" style="justify-content: center; align-items: center; text-align: center;">
+          <h2 style="font-size: 32px; color: var(--amber);">READY FOR LIFTOFF 🚀</h2>
+          <p style="margin-top: 10px;">We welcome your questions and invite you to try the live simulation!</p>
+        </div>
+      </div>
+      <div class="speaker-note">
+        <strong>🎙️ Speaker Note:</strong> "Thank you for your time! Our entire team is now open for questions and ready to jump into the live simulation."
+      </div>
+    </section>
+  </div>
+
+  <div class="controls-bar">
+    <div>SOL-7 PITCH DECK • USE <strong>◄ LEFT / RIGHT ►</strong> ARROWS TO NAVIGATE</div>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <button class="btn" onclick="prevSlide()">◄ PREV</button>
+      <span id="slideIndicator">01 / 12</span>
+      <button class="btn" onclick="nextSlide()">NEXT ►</button>
+      <button class="btn" onclick="window.print()" style="border-color: #fbbf24; color: #fde68a;">🖨️ PRINT / SAVE PDF</button>
+    </div>
+  </div>
+
+  <script>
+    let current = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slideIndicator');
+
+    function showSlide(index) {
+      slides[current].classList.remove('active');
+      current = (index + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      indicator.textContent = String(current + 1).padStart(2, '0') + ' / ' + slides.length;
+    }
+    function nextSlide() { showSlide(current + 1); }
+    function prevSlide() { showSlide(current - 1); }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+  </script>
+</body>
+</html>
