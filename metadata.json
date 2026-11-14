@@ -1,0 +1,6 @@
+{
+  "name": "SOL-7: Orbital Launch Platform",
+  "description": "Interactive 3D browser space mission launchpad built with Three.js, React Three Fiber, procedural rocket, coastal terrain, and dawn atmospheric effects.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
